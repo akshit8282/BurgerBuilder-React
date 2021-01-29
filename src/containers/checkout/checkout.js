@@ -8,6 +8,14 @@ class Checkout extends Component{
             cheese:2,
         }
     }
+     componentDidMount(){
+         const ingredients={};
+         const query=new URLSearchParams(this.props.location.search);
+         for(let params of query.entries()){
+             ingredients[params[0]]=+params[1];
+         }
+         this.setState({ingredients:ingredients})
+     }
     checkoutCancel=()=>{
         this.props.history.goBack();
     }
