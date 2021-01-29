@@ -8,9 +8,19 @@ class Checkout extends Component{
             cheese:2,
         }
     }
+    checkoutCancel=()=>{
+        this.props.history.goBack();
+    }
+    checkoutContinue=()=>{
+        this.props.history.replace('/checkout/contact-data');
+    }
+
     render(){
         return(
-<CheckoutSummary ingredients={this.state.ingredients} />
+<CheckoutSummary ingredients={this.state.ingredients}
+checkoutCancel={this.checkoutCancel}
+checkoutContinue={this.checkoutContinue}
+/>
         );
     }
 }

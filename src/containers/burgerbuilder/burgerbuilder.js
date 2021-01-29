@@ -79,7 +79,7 @@ this.setState({
     }
     purchaseContinue=()=>{
         //alert('you Continued')
-        this.setState({loading:true});
+       /* this.setState({loading:true});
         this.setState({purchasing:true})
         const order={
             ingredients:this.state.ingredients,
@@ -95,8 +95,8 @@ this.setState({
                 console.log(res);
         }).catch((err)=>{
 this.setState({loading:false,purchasing:false});
-        })
-          
+        })*/
+          this.props.history.push('/checkout');
        
     }
     render() {
