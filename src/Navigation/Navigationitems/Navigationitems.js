@@ -4,8 +4,8 @@ import Navigationitem from './Navigationitem.js/Navigationitem'
 function Navigationitems() {
     return (
       <ul className={style.Navigationitems}>
-<Navigationitem link='/' active>Burger Builder</Navigationitem>
-<Navigationitem link='/'>Checkout?</Navigationitem>
+<Navigationitem link='/' >Burger Builder</Navigationitem>
+<Navigationitem link='/Order'>Orders</Navigationitem>
       </ul>
     )
 }

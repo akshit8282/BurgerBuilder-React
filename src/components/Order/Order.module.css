@@ -1,0 +1,13 @@
+h1{
+    text-align: center;
+    font-weight: bold;
+    font-family: fantasy;
+}
+.Order{
+    margin:10px 80px;
+    padding: 7px;
+    text-align: center;
+    box-shadow: 2px 0 3px dimgray;
+    border-radius: 30px;
+    box-sizing: border-box;
+}

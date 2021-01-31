@@ -79,27 +79,12 @@ this.setState({
     }
     purchaseContinue=()=>{
         //alert('you Continued')
-       /* this.setState({loading:true});
-        this.setState({purchasing:true})
-        const order={
-            ingredients:this.state.ingredients,
-            price:this.state.totalPrice,
-            customer:{
-                name:"ak batra",
-                street:"test1",
-                country:"canada",
-            },
-        }
-        axios.post('/orders.json',order).then((res)=>{
-                this.setState({loading:false,purchasing:false});
-                console.log(res);
-        }).catch((err)=>{
-this.setState({loading:false,purchasing:false});
-        })*/
+      
         const queryParams=[];
         for(let i in this.state.ingredients){
             queryParams.push(encodeURIComponent(i)+"="+encodeURIComponent(this.state.ingredients[i]));
         }
+        queryParams.push("price="+this.state.totalPrice);
         const queryString=queryParams.join('&');
           this.props.history.push({
               pathname:'/checkout',
