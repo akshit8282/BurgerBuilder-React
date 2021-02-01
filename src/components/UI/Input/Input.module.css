@@ -1,0 +1,21 @@
+.Form{
+    
+    width: 100%;
+    padding: 12px;}
+.Input{
+    margin:4px;
+    text-decoration: dimgray;
+    font-size: large;
+    width: 100%;
+    box-sizing: border-box;
+}
+.Input:focus{
+    outline: none;
+    background-color: wheat;
+    color: black;
+}
+.Label{
+    font-weight: bold;
+    display: block;
+
+}

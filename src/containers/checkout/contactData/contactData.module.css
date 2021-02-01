@@ -12,12 +12,3 @@ box-shadow: 2px 3px wheat;
         width: 500px;
     }
 }
-.Form{
-    display: flex;
-    flex-direction: column;
-    padding: 12px;}
-.Input{
-    margin:4px;
-    text-decoration: dimgray;
-    font-size: large;
-}
