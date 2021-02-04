@@ -82,10 +82,14 @@ deliveryMethod:{
     ],
         
     },
-    value:"cheapest" 
+    validation:{},
+    value:"cheapest",
+    valid:true ,
+    ok:false
 }
       },
-        loading:false
+        loading:false,
+        formisValid:false
     }
     validationCheck=(element,rules)=>{
 let isValid=false 
@@ -131,7 +135,13 @@ const isvalidation=this.validationCheck(updatedElement.value,updatedElement.vali
 updatedElement.touched=true
 updatedElement.valid=isvalidation
 updatedForm[indentifier]=updatedElement;
-this.setState({orderForm:updatedForm});
+let formValid=true;
+for(let element in updatedForm){
+    formValid=updatedForm[element].valid&&formValid;
+}
+console.log(formValid)
+
+this.setState({orderForm:updatedForm,formisValid:formValid});
 }
 
 
@@ -154,11 +164,11 @@ for(let i in this.state.orderForm){
         
         }
         validated={!i.config.valid}
-shouldValid={i.config.validation}
+shouldValid={i.config.ok}
 touched={i.config.touched}
            />
        })}
-        <Button className={style.Input} btnType="Success" clicked={this.orderHandler}>Order</Button>
+        <Button className={style.Input} disabled={!this.state.formisValid} btnType="Success" clicked={this.orderHandler}>Order</Button>
     </form>);
 if(this.state.loading){
     form=<Spinner/>
