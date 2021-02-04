@@ -19,3 +19,7 @@
     display: block;
 
 }
+.Invalid{
+    background-color: rgb(219, 157, 157);
+    border:2px solid red
+}
