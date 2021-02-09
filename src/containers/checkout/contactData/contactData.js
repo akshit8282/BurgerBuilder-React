@@ -4,6 +4,7 @@ import style from './contactData.module.css'
 import axios from '../../../axios-burger'
 import Spinner from '../../../components/UI/Spinner/Spinner'
 import Input from '../../../components/UI/Input/Input'
+import {connect} from 'react-redux'
 class Contact extends Component{
     state={
       orderForm:{
@@ -82,7 +83,9 @@ deliveryMethod:{
     ],
         
     },
-    validation:{},
+    validation:{
+        required:true,
+    },
     value:"cheapest",
     valid:true ,
     ok:false
@@ -102,6 +105,8 @@ if(rules.minLength){
 if(rules.maxLength){
     isValid=element.length<=rules.maxLength&&isValid;
 }
+if(element==='cheapest'&&element==='fastest')
+isValid=true
 return isValid
     }
     orderHandler=(event)=>{
@@ -114,8 +119,8 @@ for(let element in this.state.orderForm){
   this.setState({loading:true});
         this.setState({purchasing:true})
         const order={
-            ingredients:this.props.ingredients,
-            price:this.props.price,
+            ingredients:this.props.ing,
+            price:this.props.totalPrice,
            order:Form
         }
         axios.post('/orders.json',order).then((res)=>{
@@ -137,9 +142,10 @@ updatedElement.valid=isvalidation
 updatedForm[indentifier]=updatedElement;
 let formValid=true;
 for(let element in updatedForm){
+    
     formValid=updatedForm[element].valid&&formValid;
 }
-console.log(formValid)
+
 
 this.setState({orderForm:updatedForm,formisValid:formValid});
 }
@@ -184,4 +190,10 @@ if(this.state.loading){
     );
 }
 }
-export default Contact;
+const mapStateToProps=(state)=>{
+    return {
+        ing:state.ingredients,
+        totalPrice:state.totalPrice
+    }
+}
+export default connect(mapStateToProps)(Contact);

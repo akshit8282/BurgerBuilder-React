@@ -10,12 +10,7 @@ import withErrorHandler from '../../withErrorHandler/withErrorHandler'
 import {connect} from 'react-redux'
 import * as actionTypes from '../../Store/action'
 
-const INGREDIENTS_PRICE={
-    salad:0.3,
-    meat:1.2,
-    bacon:0.5,
-    cheese:1
-}
+
 class burgerbuilder extends Component {
     state={
         ingredients:null,
@@ -37,40 +32,11 @@ componentDidMount(){
      }).reduce((sum,el)=>{
          return sum+el;
      },0);
-this.setState({
-    purchase:sum>0
-})
+
+    return sum>0;
+
     }
-     addIngredients=(type)=>{
-        let oldcount=this.state.ingredients[type];
-        let newcount=oldcount+1;
-        const newingredient={
-            ...this.state.ingredients
-        }
-         newingredient[type]=newcount;
-          let oldprice=this.state.totalPrice;
-         let newprice=oldprice+INGREDIENTS_PRICE[type];
-          this.setState({
-              totalPrice:newprice,
-              ingredients:newingredient
-          })
-          this.updatePurchaseState(newingredient);
-    }
-    deleteIngredients=(type)=>{
-        let oldcount=this.state.ingredients[type];
-        let newcount=oldcount-1;
-        const newingredient={
-            ...this.state.ingredients
-        }
-         newingredient[type]=newcount;
-          let oldprice=this.state.totalPrice;
-         let newprice=oldprice-INGREDIENTS_PRICE[type];
-          this.setState({
-              totalPrice:newprice,
-              ingredients:newingredient
-          })
-          this.updatePurchaseState(newingredient)
-    }
+    
     purchaseHandler=()=>{
         this.setState({purchasing:true})
     }
@@ -84,7 +50,7 @@ this.setState({
         for(let i in this.state.ingredients){
             queryParams.push(encodeURIComponent(i)+"="+encodeURIComponent(this.state.ingredients[i]));
         }
-        queryParams.push("price="+this.state.totalPrice);
+        queryParams.push("price="+this.props.totalPrice);
         const queryString=queryParams.join('&');
           this.props.history.push({
               pathname:'/checkout',
@@ -108,10 +74,10 @@ this.setState({
             burger=(<Aux>(<Burger ingredients={this.props.ing}/>
                 <BuildControls addIngredients={this.props.IngredientsAdded} deleteIngredients={this.props.IngredientsRemove}
                 disabledInfo={disabledInfo}
-                price={this.state.totalPrice}
-                purchase={this.state.purchase}
+                price={this.props.totalPrice}
+                purchase={this.updatePurchaseState(this.props.ing)}
                 ordered={this.purchaseHandler}/>)</Aux>);
-                orderSummary=<OrderSummary ingredient={this.props.ing} cancel={this.purchaseCancel} continued={this.purchaseContinue} price={this.state.totalPrice}/>
+                orderSummary=<OrderSummary ingredient={this.props.ing} cancel={this.purchaseCancel} continued={this.purchaseContinue} price={this.props.totalPrice}/>
         }
         if(this.state.loading){
             orderSummary=<Spinner/>
@@ -129,7 +95,8 @@ this.setState({
 
 const mapStateToProps=(state)=>{
     return{
-ing:state.ingredients
+ing:state.ingredients,
+totalPrice:state.totalPrice
     }
 }
 const mapDispatchToProps=(dispatch)=>{
