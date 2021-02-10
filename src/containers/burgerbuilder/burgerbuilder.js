@@ -11,18 +11,17 @@ import {connect} from 'react-redux'
 import * as BurgeractionTypes from '../../Store/action/index'
 
 
+
 class burgerbuilder extends Component {
     state={
-        ingredients:null,
-        totalPrice:4,
+       
         purchase:false,
         purchasing:false,
         loading:false
     }
 componentDidMount(){
-    /*axios.get("https://react-burgerbuilder-ab5c6-default-rtdb.firebaseio.com/ingredients.json").then((res)=>{
-        this.setState({ingredients:res.data});
-    }).catch(err=>{console.log(err)});*/
+    this.props. SetIngredients();
+    /**/
 }
     
     updatePurchaseState(ingredients)
@@ -68,7 +67,7 @@ componentDidMount(){
         let orderSummary=null;
         
        
-        let burger=<Spinner/> 
+        let burger=this.props.error?'Ingredients cant be loaded':<Spinner/> 
         
         if(this.props.ing){
             burger=(<Aux>(<Burger ingredients={this.props.ing}/>
@@ -96,13 +95,15 @@ componentDidMount(){
 const mapStateToProps=(state)=>{
     return{
 ing:state.ingredients,
-totalPrice:state.totalPrice
+totalPrice:state.totalPrice,
+error:state.error
     }
 }
 const mapDispatchToProps=(dispatch)=>{
     return{
         IngredientsAdded:(ingredient)=>dispatch(BurgeractionTypes.addIngredients(ingredient)),
-        IngredientsRemove:(ingredient)=>dispatch(BurgeractionTypes.removeIngredients(ingredient))
+        IngredientsRemove:(ingredient)=>dispatch(BurgeractionTypes.removeIngredients(ingredient)),
+        SetIngredients:()=>dispatch(BurgeractionTypes.initIngredient())
     }
 }
 
