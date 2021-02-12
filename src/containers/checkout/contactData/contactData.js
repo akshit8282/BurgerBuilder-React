@@ -5,6 +5,8 @@ import axios from '../../../axios-burger'
 import Spinner from '../../../components/UI/Spinner/Spinner'
 import Input from '../../../components/UI/Input/Input'
 import {connect} from 'react-redux'
+import * as action from '../../../Store/action/index'
+import withErrorHandler from '../../../withErrorHandler/withErrorHandler'
 class Contact extends Component{
     state={
       orderForm:{
@@ -91,7 +93,7 @@ deliveryMethod:{
     ok:false
 }
       },
-        loading:false,
+        
         formisValid:false
     }
     validationCheck=(element,rules)=>{
@@ -116,19 +118,14 @@ for(let element in this.state.orderForm){
     Form[element]=this.state.orderForm[element].value;
 }
 
-  this.setState({loading:true});
-        this.setState({purchasing:true})
+  
+        
         const order={
             ingredients:this.props.ing,
             price:this.props.totalPrice,
            order:Form
         }
-        axios.post('/orders.json',order).then((res)=>{
-                this.setState({loading:false,});
-                this.props.history.push('/');
-        }).catch((err)=>{
-this.setState({loading:false});
-        })
+      this.props.orderSuccess(order)
     }
 
 inputHandler=(event,indentifier)=>{
@@ -176,7 +173,7 @@ touched={i.config.touched}
        })}
         <Button className={style.Input} disabled={!this.state.formisValid} btnType="Success" clicked={this.orderHandler}>Order</Button>
     </form>);
-if(this.state.loading){
+if(this.props.loading){
     form=<Spinner/>
 }
 
@@ -192,8 +189,14 @@ if(this.state.loading){
 }
 const mapStateToProps=(state)=>{
     return {
-        ing:state.ingredients,
-        totalPrice:state.totalPrice
+        ing:state.burger.ingredients,
+        totalPrice:state.burger.totalPrice,
+        loading:state.order.loading
     }
 }
-export default connect(mapStateToProps)(Contact);
+const mapDispatchToProps=(dispatch)=>{
+return {
+    orderSuccess:(orderData)=>dispatch(action.initOrder(orderData))
+}
+}
+export default connect(mapStateToProps,mapDispatchToProps)(withErrorHandler(Contact,axios));

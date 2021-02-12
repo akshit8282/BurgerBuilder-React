@@ -94,9 +94,9 @@ componentDidMount(){
 
 const mapStateToProps=(state)=>{
     return{
-ing:state.ingredients,
-totalPrice:state.totalPrice,
-error:state.error
+ing:state.burger.ingredients,
+totalPrice:state.burger.totalPrice,
+error:state.burger.error
     }
 }
 const mapDispatchToProps=(dispatch)=>{
