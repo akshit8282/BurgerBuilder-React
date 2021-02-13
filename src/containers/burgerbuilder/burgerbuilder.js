@@ -44,7 +44,7 @@ componentDidMount(){
     }
     purchaseContinue=()=>{
         //alert('you Continued')
-      
+      this.props.onInitPurchase();
         const queryParams=[];
         for(let i in this.state.ingredients){
             queryParams.push(encodeURIComponent(i)+"="+encodeURIComponent(this.state.ingredients[i]));
@@ -103,7 +103,8 @@ const mapDispatchToProps=(dispatch)=>{
     return{
         IngredientsAdded:(ingredient)=>dispatch(BurgeractionTypes.addIngredients(ingredient)),
         IngredientsRemove:(ingredient)=>dispatch(BurgeractionTypes.removeIngredients(ingredient)),
-        SetIngredients:()=>dispatch(BurgeractionTypes.initIngredient())
+        SetIngredients:()=>dispatch(BurgeractionTypes.initIngredient()),
+        onInitPurchase:()=>dispatch(BurgeractionTypes.purchaseOrder())
     }
 }
 

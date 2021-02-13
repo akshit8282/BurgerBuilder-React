@@ -1,11 +1,18 @@
 import * as actionTypes from '../action/actionTypes'
 const initialState={
     loading :false,
-    order:[]
+    order:[],
+    purchased:false
 }
 const reducer =(state=initialState,action)=>{
 switch(action.type)
 {
+    case actionTypes.ORDER_PURCHASE:
+        return {
+            ...state,
+            purchased:false
+
+        }
     case actionTypes.ORDER_SUCCESS:
         const newOrder={
             id:action.id,
@@ -14,6 +21,7 @@ switch(action.type)
         return {
             ...state,
             loading:false,
+            purchased:true,
             order:state.order.concat(newOrder)
         }
         case actionTypes.ORDER_FAIL:
@@ -21,6 +29,7 @@ switch(action.type)
                 ...state
                 ,
                 loading :false,
+                
                 error:action.error
             }
             case actionTypes.PURCHASE_LOADING:

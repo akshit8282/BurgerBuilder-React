@@ -19,12 +19,19 @@ export const purchaseLoading=()=>{
         type:actionTypes.PURCHASE_LOADING
     }
 }
+export const purchaseOrder=()=>{
+    return{
+        type:actionTypes.ORDER_PURCHASE
+    }
+}
+
 export const initOrder=(orderData)=>{
     
     return dispatch=>{
+        
         dispatch(purchaseLoading());
         axios.post('/orders.json',orderData).then((res)=>{
-            dispatch(orderSuccess(res.data,orderData))
+            dispatch(orderSuccess(res.data.name,orderData))
     }).catch((err)=>{
 dispatch(orderderFail(err))
     })
